@@ -7,7 +7,7 @@ import play.api.data._
 import play.api.data.Forms._
 import anorm.{Pk, NotAssigned}
 
-object Application extends Controller {
+object CrawlerJobCRUD extends Controller {
 
   def index = Action {
     Ok(views.html.index(CrawlerJob.all()))
