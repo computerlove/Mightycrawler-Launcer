@@ -17,6 +17,12 @@ object Application extends Controller {
     Ok(views.html.crawlerjob.create(crawlerJobForm))
   }
 
+  def editJob(id: Long) = Action {
+    CrawlerJob.getJob(id).map{
+      crawlerJob => Ok(views.html.crawlerjob.edit(id, crawlerJobForm.fill(crawlerJob)))
+    }.getOrElse(NotFound)
+  }
+
   def createNewJob =  Action { implicit request =>
     crawlerJobForm.bindFromRequest.fold(
       formWithErrors => BadRequest(views.html.crawlerjob.create(formWithErrors)),
@@ -30,6 +36,15 @@ object Application extends Controller {
     )
   }
 
+  def updateJob(id: Long) =  Action { implicit request =>
+    crawlerJobForm.bindFromRequest.fold(
+      formWithErrors => BadRequest(views.html.crawlerjob.create(formWithErrors)),
+      crawlerJob => {
+        CrawlerJob.update(id, crawlerJob)
+        Redirect(routes.Application.getJob(id))
+      }
+    )
+  }
 
   def getJob(id: Long) = Action {
     CrawlerJob.getJob(id) match {

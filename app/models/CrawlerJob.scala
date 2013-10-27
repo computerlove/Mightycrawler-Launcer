@@ -30,6 +30,15 @@ object CrawlerJob {
     }
   }
 
+  def update(id: Long, crawlerJob: CrawlerJob)  {
+    DB.withConnection { implicit c =>
+      SQL("update crawlerjob set label={label}, startUrls={startUrls}").on(
+        'label -> crawlerJob.label,
+        'startUrls -> crawlerJob.startUrls
+      ).executeUpdate()
+    }
+  }
+
   def delete(id: Long) {
     DB.withConnection { implicit c =>
       SQL("delete from crawlerjob where id = {id}").on(

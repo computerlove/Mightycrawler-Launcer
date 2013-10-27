@@ -12,4 +12,6 @@ GET        /assets/*file        controllers.Assets.at(path="/public", file)
 GET        /jobs/new            controllers.Application.newJob
 POST        /jobs/new            controllers.Application.createNewJob
 GET        /jobs/:id            controllers.Application.getJob(id: Long)
-POST     /jobs/:id            controllers.Application.deleteJob(id: Long)
+POST     /jobs/:id/delete            controllers.Application.deleteJob(id: Long)
+POST     /jobs/:id            controllers.Application.updateJob(id: Long)
+GET     /jobs/:id/edit            controllers.Application.editJob(id: Long)

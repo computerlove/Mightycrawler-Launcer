@@ -1,16 +1,26 @@
-@(job: CrawlerJob)
+@(id: Long, jobform: Form[CrawlerJob])
+@import helper._
 
-
-@main(job.label) {
+@main("Edit") {
     <article>
-        <h1>@job.label</h1>
+        <h1>Edit</h1>
 
         <div class="content">
-            <ul class="joburls">
-            @job.startUrls.split(",").map { url =>
-                <li>@url</li>
-            }
-            </ul>
+        @form(routes.Application.updateJob(id)) {
+
+            <fieldset>
+
+                @inputText(jobform("label"), '_label -> "CrawlerJob name")
+                @inputText(jobform("startUrls"), '_label -> "Start urls")
+
+            </fieldset>
+
+            <div class="actions">
+                <input type="submit" value="Update" class="btn primary"> or
+                <a href="@routes.Application.index" class="btn">Cancel</a>
+            </div>
+
+        }
         </div>
     </article>
 }
