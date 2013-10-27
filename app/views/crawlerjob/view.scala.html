@@ -14,7 +14,7 @@
                 </ul>
             </div>
         </article>
-        @form(routes.Application.deleteJob(job.id)) {
+        @form(routes.Application.deleteJob(job.id.get)) {
             <input type="submit" value="Delete">
         }
     </div>

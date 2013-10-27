@@ -1,0 +1,26 @@
+@(jobform: Form[CrawlerJob])
+@import helper._
+
+@main("Create new CrawlerJob") {
+    <article>
+        <h1>Create new CrawlerJob</h1>
+
+        <div class="content">
+        @form(routes.Application.createNewJob) {
+
+            <fieldset>
+
+                @inputText(jobform("label"), '_label -> "CrawlerJob name")
+                @inputText(jobform("startUrls"), '_label -> "Start urls")
+
+            </fieldset>
+
+            <div class="actions">
+                <input type="submit" value="Create" class="btn primary"> or
+                <a href="@routes.Application.index" class="btn">Cancel</a>
+            </div>
+
+        }
+        </div>
+    </article>
+}

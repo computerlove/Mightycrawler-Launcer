@@ -5,26 +5,31 @@ import models.CrawlerJob
 
 import play.api.data._
 import play.api.data.Forms._
+import anorm.{Pk, NotAssigned}
 
 object Application extends Controller {
 
   def index = Action {
-    Ok(views.html.index(CrawlerJob.all(), crawlerJobForm))
+    Ok(views.html.index(CrawlerJob.all()))
   }
 
-  def newJob =  Action { implicit request =>
+  def newJob = Action {
+    Ok(views.html.crawlerjob.create(crawlerJobForm))
+  }
+
+  def createNewJob =  Action { implicit request =>
     crawlerJobForm.bindFromRequest.fold(
-      errors => BadRequest(views.html.index(CrawlerJob.all(), errors)),
-    {case (label, startUrls) => {
-        val newJobId: Option[Long] = CrawlerJob.create(label, startUrls)
+      formWithErrors => BadRequest(views.html.crawlerjob.create(formWithErrors)),
+       crawlerJob => {
+        val newJobId: Option[Long] = CrawlerJob.create(crawlerJob)
         newJobId match {
           case Some(id) => Redirect(routes.Application.getJob(id))
-          case None => InternalServerError(views.html.index(CrawlerJob.all(),
-            crawlerJobForm.withError(new FormError("Error when inserting CrawlerJob, no id returned", ""))))
+          case None => InternalServerError(views.html.crawlerjob.create(crawlerJobForm))
         }
-      }}
+      }
     )
   }
+
 
   def getJob(id: Long) = Action {
     CrawlerJob.getJob(id) match {
@@ -39,6 +44,10 @@ object Application extends Controller {
   }
 
   val crawlerJobForm = Form(
-    tuple("label" -> nonEmptyText, "startUrls" -> nonEmptyText)
+    mapping(
+      "id" -> ignored(NotAssigned:Pk[Long]),
+      "label" -> nonEmptyText,
+      "startUrls" -> nonEmptyText
+    )(CrawlerJob.apply)(CrawlerJob.unapply)
   )
 }

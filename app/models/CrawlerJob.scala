@@ -5,7 +5,7 @@ import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
 
-case class CrawlerJob(id: Long, label: String, startUrls: String)
+case class CrawlerJob(id: Pk[Long] = NotAssigned, label: String, startUrls: String)
 
 object CrawlerJob {
 
@@ -21,11 +21,11 @@ object CrawlerJob {
     }
   }
 
-  def create(label: String, startUrls: String): Option[Long] =  {
+  def create(crawlerJob: CrawlerJob): Option[Long] =  {
     DB.withConnection { implicit c =>
       SQL("insert into crawlerjob (label, startUrls) values ({label}, {startUrls})").on(
-        'label -> label,
-        'startUrls -> startUrls
+        'label -> crawlerJob.label,
+        'startUrls -> crawlerJob.startUrls
       ).executeInsert()
     }
   }
@@ -39,7 +39,7 @@ object CrawlerJob {
   }
 
   val crawlerjob = {
-    get[Long]("id") ~
+    get[Pk[Long]]("id") ~
       get[String]("label") ~
         get[String]("startUrls") map {
         case id~label~startUrls => CrawlerJob(id, label, startUrls)

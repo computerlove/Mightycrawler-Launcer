@@ -1,4 +1,4 @@
-@(jobs: List[CrawlerJob], jobform: Form[(String,String)])
+@(jobs: List[CrawlerJob])
 
 @import helper._
 
@@ -9,7 +9,7 @@
     <ul>
     @jobs.map { job =>
         <li>
-            <a href="@routes.Application.getJob(job.id)">@job.label</a>
+            <a href="@routes.Application.getJob(job.id.get)">@job.label</a>
         </li>
     }
     </ul>
@@ -17,11 +17,7 @@
     <h2>Add a new CrawlerJob</h2>
 
     @form(routes.Application.newJob) {
-
-        @inputText(jobform("label"))
-        @inputText(jobform("startUrls"))
-
-        <input type="submit" value="Create">
+        <input type="submit" value="Create new CrawlerJob">
 
     }
 
