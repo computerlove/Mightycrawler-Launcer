@@ -9,11 +9,7 @@
     <ul>
     @jobs.map { job =>
         <li>
-            @job.label
-
-            @form(routes.Application.deleteJob(job.id)) {
-                <input type="submit" value="Delete">
-                }
+            <a href="@routes.Application.getJob(job.id)">@job.label</a>
         </li>
     }
     </ul>

@@ -15,7 +15,7 @@ object CrawlerJob {
 
   def getJob(id: Long) : Option[CrawlerJob] = {
     DB.withConnection { implicit c =>
-      SQL("delete from crawlerjob where id = {id}").on(
+      SQL("select * from crawlerjob where id = {id}").on(
         'id -> id
       ).as(crawlerjob.singleOpt)
     }

@@ -11,4 +11,4 @@ GET        /assets/*file        controllers.Assets.at(path="/public", file)
 # Crawler jobs
 GET        /jobs/new            controllers.Application.newJob
 GET        /jobs/:id            controllers.Application.getJob(id: Long)
-DELETE     /jobs/:id            controllers.Application.deleteJob(id: Long)
+POST     /jobs/:id            controllers.Application.deleteJob(id: Long)

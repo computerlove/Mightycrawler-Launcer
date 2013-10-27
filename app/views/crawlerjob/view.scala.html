@@ -1,15 +1,21 @@
 @(job: CrawlerJob)
+@import helper._
 
 @main(job.label) {
-    <article>
-        <h1>@job.label</h1>
+    <div>
+        <article>
+            <h1>@job.label</h1>
 
-        <div class="content">
-            <ul class="joburls">
+            <div class="content">
+                <ul class="joburls">
                 @job.startUrls.split(",").map { url =>
                     <li>@url</li>
                 }
-            </ul>
-        </div>
-    </article>
+                </ul>
+            </div>
+        </article>
+        @form(routes.Application.deleteJob(job.id)) {
+            <input type="submit" value="Delete">
+        }
+    </div>
 }
