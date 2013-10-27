@@ -1,7 +1,32 @@
-@(message: String)
+@(jobs: List[CrawlerJob], jobform: Form[(String,String)])
 
-@main("Welcome to Play") {
+@import helper._
 
-    @play20.welcome(message)
+@main("CrawlerJobs") {
+
+    <h1>@jobs.size CrawlerJob</h1>
+
+    <ul>
+    @jobs.map { job =>
+        <li>
+            @job.label
+
+            @form(routes.Application.deleteJob(job.id)) {
+                <input type="submit" value="Delete">
+                }
+        </li>
+    }
+    </ul>
+
+    <h2>Add a new CrawlerJob</h2>
+
+    @form(routes.Application.newJob) {
+
+        @inputText(jobform("label"))
+        @inputText(jobform("startUrls"))
+
+        <input type="submit" value="Create">
+
+    }
 
 }
