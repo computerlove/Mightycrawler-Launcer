@@ -14,7 +14,7 @@ object Application extends Controller {
   }
 
   def newJob = Action {
-    Ok(views.html.crawlerjob.create(crawlerJobForm))
+    Ok(views.html.crawlerjob.create(crawlerJobForm.fill(new CrawlerJob(label = "", startUrls = ""))))
   }
 
   def editJob(id: Long) = Action {
@@ -26,7 +26,7 @@ object Application extends Controller {
   def createNewJob =  Action { implicit request =>
     crawlerJobForm.bindFromRequest.fold(
       formWithErrors => BadRequest(views.html.crawlerjob.create(formWithErrors)),
-       crawlerJob => {
+      crawlerJob => {
         val newJobId: Option[Long] = CrawlerJob.create(crawlerJob)
         newJobId match {
           case Some(id) => Redirect(routes.Application.getJob(id))
@@ -62,7 +62,19 @@ object Application extends Controller {
     mapping(
       "id" -> ignored(NotAssigned:Pk[Long]),
       "label" -> nonEmptyText,
-      "startUrls" -> nonEmptyText
+      "startUrls" -> nonEmptyText,
+      "extractPattern" -> nonEmptyText,
+      "linkPattern" -> nonEmptyText,
+      "storePattern" -> text,
+      "userAgent" -> nonEmptyText,
+      "downloadThreads" -> number,
+      "maxVisits" -> number,
+      "maxDownloads" -> number,
+      "maxRecursion" -> number,
+      "maxTime" -> number,
+      "downloadDelay" -> number,
+      "responseTimeout" -> number,
+      "crawlerTimeout" -> number
     )(CrawlerJob.apply)(CrawlerJob.unapply)
   )
 }

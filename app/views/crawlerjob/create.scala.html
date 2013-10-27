@@ -5,14 +5,30 @@
     <article>
         <h1>Create new CrawlerJob</h1>
 
+        @if(jobform.hasErrors){
+            <ul class="errors">
+            @jobform.errors.map { error =>
+                <li>@error.key @error.message</li>
+            }
+            </ul>
+        }
         <div class="content">
         @form(routes.Application.createNewJob) {
-
             <fieldset>
-
                 @inputText(jobform("label"), '_label -> "CrawlerJob name")
                 @inputText(jobform("startUrls"), '_label -> "Start urls")
-
+                @inputText(jobform("extractPattern"), '_label -> "extractPattern")
+                @inputText(jobform("linkPattern"), '_label -> "linkPattern")
+                @inputText(jobform("storePattern"), '_label -> "storePattern")
+                @inputText(jobform("userAgent"), '_label -> "userAgent")
+                @inputText(jobform("downloadThreads"), '_label -> "downloadThreads")
+                @inputText(jobform("maxVisits"), '_label -> "maxVisits")
+                @inputText(jobform("maxDownloads"), '_label -> "maxDownloads")
+                @inputText(jobform("maxRecursion"), '_label -> "maxRecursion")
+                @inputText(jobform("maxTime"), '_label -> "maxTime")
+                @inputText(jobform("downloadDelay"), '_label -> "downloadDelay")
+                @inputText(jobform("responseTimeout"), '_label -> "responseTimeout")
+                @inputText(jobform("crawlerTimeout"), '_label -> "crawlerTimeout")
             </fieldset>
 
             <div class="actions">
