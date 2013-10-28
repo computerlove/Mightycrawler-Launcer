@@ -3,15 +3,18 @@
 # ~~~~
 
 # Home page
-GET        /                    controllers.CrawlerJobCRUD.index
+GET         /                       controllers.CrawlerJobCRUD.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file        controllers.Assets.at(path="/public", file)
+GET         /assets/*file           controllers.Assets.at(path="/public", file)
 
 # Crawler jobs
-GET  /jobs/new            controllers.CrawlerJobCRUD.newJob
-POST /jobs/new            controllers.CrawlerJobCRUD.createNewJob
-GET  /jobs/:id            controllers.CrawlerJobCRUD.getJob(id: Long)
-POST /jobs/:id/delete            controllers.CrawlerJobCRUD.deleteJob(id: Long)
-POST /jobs/:id            controllers.CrawlerJobCRUD.updateJob(id: Long)
-GET  /jobs/:id/edit            controllers.CrawlerJobCRUD.editJob(id: Long)
+GET         /jobs/new               controllers.CrawlerJobCRUD.newJob
+POST        /jobs/new               controllers.CrawlerJobCRUD.createNewJob
+GET         /jobs/:id               controllers.CrawlerJobCRUD.getJob(id: Long)
+POST        /jobs/:id/delete        controllers.CrawlerJobCRUD.deleteJob(id: Long)
+POST        /jobs/:id               controllers.CrawlerJobCRUD.updateJob(id: Long)
+GET         /jobs/:id/edit          controllers.CrawlerJobCRUD.editJob(id: Long)
+
+POST         /jobs/:id/run          controllers.CrawlerJobRunner.runJob(id: Long)
+

@@ -13,7 +13,7 @@
             </ul>
         }
         <div class="content">
-        @form(routes.Application.createNewJob) {
+        @form(routes.CrawlerJobCRUD.createNewJob) {
             <fieldset>
                 @inputText(jobform("label"), '_label -> "CrawlerJob name")
                 @inputText(jobform("startUrls"), '_label -> "Start urls")
@@ -33,7 +33,7 @@
 
             <div class="actions">
                 <input type="submit" value="Create" class="btn primary"> or
-                <a href="@routes.Application.index" class="btn">Cancel</a>
+                <a href="@routes.CrawlerJobCRUD.index" class="btn">Cancel</a>
             </div>
 
         }

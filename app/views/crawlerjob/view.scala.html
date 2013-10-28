@@ -14,8 +14,8 @@
                 </ul>
             </div>
         </article>
-        <a href="@routes.Application.editJob(job.id.get)">Rediger</a>
-        @form(routes.Application.deleteJob(job.id.get)) {
+        <a href="@routes.CrawlerJobCRUD.editJob(job.id.get)">Rediger</a>
+        @form(routes.CrawlerJobCRUD.deleteJob(job.id.get)) {
             <input type="submit" value="Delete">
         }
     </div>

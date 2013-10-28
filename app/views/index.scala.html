@@ -9,14 +9,17 @@
     <ul>
     @jobs.map { job =>
         <li>
-            <a href="@routes.Application.getJob(job.id.get)">@job.label</a>
+            <a href="@routes.CrawlerJobCRUD.getJob(job.id.get)">@job.label</a>
+            @form(routes.CrawlerJobRunner.runJob(job.id.get)) {
+                <input type="submit" value="Run">
+            }
         </li>
     }
     </ul>
 
     <h2>Add a new CrawlerJob</h2>
 
-    @form(routes.Application.newJob) {
+    @form(routes.CrawlerJobCRUD.newJob) {
         <input type="submit" value="Create new CrawlerJob">
 
     }

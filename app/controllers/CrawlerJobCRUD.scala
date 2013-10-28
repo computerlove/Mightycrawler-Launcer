@@ -29,7 +29,7 @@ object CrawlerJobCRUD extends Controller {
       crawlerJob => {
         val newJobId: Option[Long] = CrawlerJob.create(crawlerJob)
         newJobId match {
-          case Some(id) => Redirect(routes.Application.getJob(id))
+          case Some(id) => Redirect(routes.CrawlerJobCRUD.getJob(id))
           case None => InternalServerError(views.html.crawlerjob.create(crawlerJobForm))
         }
       }
@@ -41,7 +41,7 @@ object CrawlerJobCRUD extends Controller {
       formWithErrors => BadRequest(views.html.crawlerjob.create(formWithErrors)),
       crawlerJob => {
         CrawlerJob.update(id, crawlerJob)
-        Redirect(routes.Application.getJob(id))
+        Redirect(routes.CrawlerJobCRUD.getJob(id))
       }
     )
   }
@@ -55,7 +55,7 @@ object CrawlerJobCRUD extends Controller {
 
   def deleteJob(id: Long) = Action {
     CrawlerJob.delete(id)
-    Redirect(routes.Application.index)
+    Redirect(routes.CrawlerJobCRUD.index)
   }
 
   val crawlerJobForm = Form(
