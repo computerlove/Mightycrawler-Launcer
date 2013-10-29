@@ -29,7 +29,10 @@ object CrawlerJobCRUD extends Controller {
       crawlerJob => {
         val newJobId: Option[Long] = CrawlerJob.create(crawlerJob)
         newJobId match {
-          case Some(id) => Redirect(routes.CrawlerJobCRUD.getJob(id))
+          case Some(id) => {
+            CrawlerJob.saveToConfig(crawlerJob)
+            Redirect(routes.CrawlerJobCRUD.getJob(id))
+          }
           case None => InternalServerError(views.html.crawlerjob.create(crawlerJobForm))
         }
       }

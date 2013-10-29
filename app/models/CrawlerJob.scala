@@ -4,6 +4,9 @@ import anorm._
 import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
+import java.io.{FileOutputStream, File}
+import play.api.Play
+import java.util.Properties
 
 case class CrawlerJob(id: Pk[Long] = NotAssigned,
                       label: String,
@@ -103,5 +106,31 @@ object CrawlerJob {
       get[Int]("crawlerTimeout") map {
       case id~label~startUrls~extractPattern~linkPattern~storePattern~userAgent~downloadThreads~maxVisits~maxDownloads~maxRecursion~maxTime~downloadDelay~responseTimeout~crawlerTimeout => CrawlerJob(id, label, startUrls, extractPattern, linkPattern, storePattern, userAgent, downloadThreads, maxVisits, maxDownloads, maxRecursion, maxTime, downloadDelay, responseTimeout, crawlerTimeout)
     }
+  }
+
+  def saveToConfig(crawlerJob: CrawlerJob) {
+    val properties: Properties = new Properties
+    properties.put("startUrls", crawlerJob.startUrls)
+    properties.put("extractPattern", crawlerJob.extractPattern)
+    properties.put("linkPattern", crawlerJob.linkPattern)
+    properties.put("storePattern", crawlerJob.storePattern)
+    properties.put("userAgent", crawlerJob.userAgent)
+    properties.put("downloadThreads", crawlerJob.downloadThreads.toString)
+    properties.put("maxVisits", crawlerJob.maxVisits.toString)
+    properties.put("maxDownloads", crawlerJob.maxDownloads.toString)
+    properties.put("maxRecursion", crawlerJob.maxRecursion.toString)
+    properties.put("maxTime", crawlerJob.maxTime.toString)
+    properties.put("downloadDelay", crawlerJob.downloadDelay.toString)
+    properties.put("responseTimeout", crawlerJob.responseTimeout.toString)
+    properties.put("crawlerTimeout", crawlerJob.crawlerTimeout.toString)
+    val file: File = getConfigurationFile(crawlerJob.id.get)
+
+    val stream: FileOutputStream = new FileOutputStream(file)
+    properties.store(stream, "")
+    scala.reflect.io.File.closeQuietly(stream)
+  }
+
+  def getConfigurationFile(id: Long): File = {
+    new File(Play.configuration.getString("appDir").get, "/" + id + "/config.properties")
   }
 }
