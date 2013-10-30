@@ -12,6 +12,7 @@ object Global extends GlobalSettings {
     }
     val file = new File(applicationDir)
     file.mkdirs()
-    super.onLoadConfig( Configuration.from(Map("appDir" -> applicationDir)), path, classloader, mode)
+    val from: Configuration = Configuration.from(Map("appDir" -> applicationDir))
+    super.onLoadConfig( config ++ from, path, classloader, mode)
   }
 }

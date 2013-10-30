@@ -20,6 +20,24 @@ CREATE TABLE crawlerjob (
   crawlerTimeout integer
 );
 
+CREATE TABLE downloads (
+  crawl_id bigint,
+  url VARCHAR(4095),
+  http_code INTEGER DEFAULT 0,
+  content_type VARCHAR(255),
+  response_time INTEGER DEFAULT 0,
+  downloaded_at DATETIME,
+  downloaded BOOLEAN
+);
+
+CREATE TABLE links (
+  crawl_id bigint,
+  url_from VARCHAR(4095),
+  url_to VARCHAR(4095)
+);
+
 # --- !Downs
 
 DROP TABLE crawlerjob;
+DROP TABLE downloads;
+DROP TABLE links;
