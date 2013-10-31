@@ -6,6 +6,7 @@ CREATE TABLE crawlerjob (
   id bigint auto_increment primary key,
   label varchar(255),
   startUrls varchar(4000),
+  includePattern varchar(255),
   extractPattern varchar(255),
   linkPattern varchar(255),
   storePattern varchar(255),
@@ -36,8 +37,16 @@ CREATE TABLE links (
   url_to VARCHAR(4095)
 );
 
+CREATE TABLE crawlerjobrun (
+  crawlerJobRunId bigint auto_increment primary key,
+  crawlerJobId bigint,
+  starttime timestamp,
+  stoptime timestamp
+);
+
 # --- !Downs
 
 DROP TABLE crawlerjob;
+DROP TABLE crawlerjobrun;
 DROP TABLE downloads;
 DROP TABLE links;

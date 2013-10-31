@@ -1,10 +1,13 @@
-@(job: CrawlerJob)
+@(job: CrawlerJob, runs: List[CrawlerJobRun])
 @import helper._
 
 @main(job.label) {
     <div>
         <article>
             <h1>@job.label</h1>
+            @form(routes.CrawlerJobRunner.runJob(job.id.get)) {
+                <input type="submit" value="Run">
+            }
 
             <div class="content">
                 <ul class="joburls">
@@ -14,6 +17,16 @@
                 </ul>
             </div>
         </article>
+
+        <div>
+            <ul>
+                @runs.map { run =>
+                    <li>@run.starttime</li>
+
+                }
+            </ul>
+        </div>
+
         <a href="@routes.CrawlerJobCRUD.editJob(job.id.get)">Rediger</a>
         @form(routes.CrawlerJobCRUD.deleteJob(job.id.get)) {
             <input type="submit" value="Delete">
