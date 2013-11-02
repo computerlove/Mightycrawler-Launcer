@@ -1,0 +1,25 @@
+@(jobRun: CrawlerJobRun,
+        duration: Option[java.time.Duration],
+        numPagesDownloaded: Long,
+        avgResponsetime: Double,
+        non200urls: List[NonOKUrls])
+
+@main("CrawlerJobsRun") {
+
+    <h1>CrawlerJobRun @jobRun.id started @jobRun.starttime</h1>
+
+    <div>
+        <p>CrawlerJobsRun took @duration.map { dur =>  @dur}</p>
+        <p>Pages downloaded @numPagesDownloaded</p>
+        <p>Average responseTime @avgResponsetime</p>
+    </div>
+
+    <section class="notreturning200">
+        <h1>URLs returning status code not 200</h1>
+        <ul>
+            @non200urls.map { url =>
+                <li>@url.url @url.statusCode</li>
+            }
+        </ul>
+    </section>
+}

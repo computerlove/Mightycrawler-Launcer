@@ -6,6 +6,7 @@ import no.bekk.bekkopen.mightycrawler.{Configuration, Crawler}
 import org.slf4j.LoggerFactory
 
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import java.time.Duration
 
 object CrawlerJobRunner extends Controller {
 
@@ -43,6 +44,25 @@ object CrawlerJobRunner extends Controller {
         }
         Redirect(routes.CrawlerJobCRUD.getJob(id))
         //Ok(views.html.crawlerjob.view(crawlerJob, CrawlerJobRun.allForJob(id)))
+      }
+    }.getOrElse(NotFound)
+  }
+
+  def jobRun(crawlerJobRunId : Long) = Action {
+    CrawlerJobRun.getCrawlerJobRun(crawlerJobRunId).map {
+      crawlerJobRun => {
+        val duration = crawlerJobRun.stoptime match {
+          case Some(stoptime) => Some(Duration.between(crawlerJobRun.starttime, stoptime))
+          case None => None
+        }
+
+        val numPagesDownloaded: Long = CrawlerJobRun.getNumPagesDownloaded(crawlerJobRunId)
+        val totalResponseTime: Double = CrawlerJobRun.getTotalResponseTime(crawlerJobRunId)
+        val avgResponsetime = totalResponseTime / numPagesDownloaded
+        Ok(views.html.crawlerjobrun.index(crawlerJobRun, duration,
+          numPagesDownloaded,
+          avgResponsetime,
+          CrawlerJobRun.getnon200Urls(crawlerJobRunId)))
       }
     }.getOrElse(NotFound)
   }

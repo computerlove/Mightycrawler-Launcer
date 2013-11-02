@@ -21,8 +21,9 @@
         <div>
             <ul>
                 @runs.map { run =>
-                    <li>@run.starttime</li>
-
+                    @run.stoptime.map { stoptime =>
+                        <li><a href="@routes.CrawlerJobRunner.jobRun(run.id.get)">@run.starttime - @stoptime</a></li>
+                    }
                 }
             </ul>
         </div>
