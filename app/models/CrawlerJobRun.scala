@@ -72,10 +72,10 @@ object CrawlerJobRun {
 
   def updateStopTime(crawlerJobId : Long) {
     DB.withConnection { implicit c =>
-      SQL("update crawlerjobrun set stoptime = {stoptime} where crawlerJobId = {id}").on(
+      SQL("update crawlerjobrun set stoptime = {stoptime} where crawlerJobRunId = {id}").on(
         'id -> crawlerJobId,
         'stoptime -> LocalDateTime.now()
-      ).executeInsert()
+      ).executeUpdate()
     }
   }
 

@@ -4,9 +4,13 @@ import play.api.mvc.{Action, Controller}
 import models.{CrawlerJobRun, CrawlerJob}
 import no.bekk.bekkopen.mightycrawler.{Configuration, Crawler}
 import org.slf4j.LoggerFactory
+import play.api.db._
+import play.api.Play.current
 
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import java.time.Duration
+import javax.sql.DataSource
+import com.jolbox.bonecp.BoneCPDataSource
 
 object CrawlerJobRunner extends Controller {
 
@@ -24,7 +28,9 @@ object CrawlerJobRunner extends Controller {
             case Some(crawlerJobId) => {
               try {
                 logger.info("Running CrawlerJobRun {}", crawlerJobId)
-                val config = new Configuration(CrawlerJob.getConfigurationFile(id).getAbsolutePath)
+                val source: DataSource = DB.getDataSource()
+                source.asInstanceOf[BoneCPDataSource].setDefaultAutoCommit(true)
+                val config = new Configuration(CrawlerJob.getConfigurationFile(id).getAbsolutePath).withDatasource(source)
                 config.crawlerId = crawlerJobId
                 val crawler: Crawler = new Crawler(config)
                 runningCrawlerJobs = runningCrawlerJobs + (id -> crawler)
