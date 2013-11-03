@@ -26,6 +26,7 @@ CREATE TABLE downloads (
   url VARCHAR(4095),
   http_code INTEGER DEFAULT 0,
   content_type VARCHAR(255),
+  page_type VARCHAR(255),
   response_time INTEGER DEFAULT 0,
   downloaded_at DATETIME,
   downloaded BOOLEAN
