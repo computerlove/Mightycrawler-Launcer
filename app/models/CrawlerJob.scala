@@ -66,7 +66,8 @@ object CrawlerJob {
 
   def update(id: Long, crawlerJob: CrawlerJob)  {
     DB.withConnection { implicit c =>
-      SQL("update crawlerjob set label={label}, startUrls={startUrls}, includePattern={includePattern}, extractPattern={extractPattern}, linkPattern={linkPattern}, storePattern={storePattern}, userAgent={userAgent}, downloadThreads={downloadThreads}, maxVisits={maxVisits}, maxDownloads={maxDownloads}, maxRecursion={maxRecursion}, maxTime={maxTime}, downloadDelay={downloadDelay}, responseTimeout={responseTimeout}, crawlerTimeout={crawlerTimeout}").on(
+      SQL("update crawlerjob set label={label}, startUrls={startUrls}, includePattern={includePattern}, extractPattern={extractPattern}, linkPattern={linkPattern}, storePattern={storePattern}, userAgent={userAgent}, downloadThreads={downloadThreads}, maxVisits={maxVisits}, maxDownloads={maxDownloads}, maxRecursion={maxRecursion}, maxTime={maxTime}, downloadDelay={downloadDelay}, responseTimeout={responseTimeout}, crawlerTimeout={crawlerTimeout} where id = {id}").on(
+        'id -> id,
         'label -> crawlerJob.label,
         'startUrls -> crawlerJob.startUrls,
         'includePattern -> crawlerJob.includePattern,
