@@ -30,9 +30,8 @@ object CrawlerJobRun {
       SQL("select SUM(response_time) as sum from downloads where downloaded=true and crawl_id = {crawlerJobRunId}").on(
         'crawlerJobRunId -> crawlerJobRunId
       ).apply().headOption match {
-        case Some(row) => {
-          row[java.math.BigDecimal]("sum").longValue()
-        }
+        case Some(row) =>
+          row[Long]("sum")
         case None => 0
       }
     }
