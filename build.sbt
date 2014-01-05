@@ -11,7 +11,7 @@ version := "1.0"
 libraryDependencies ++= Seq(
   jdbc,
   anorm,
-  "no.bekk.bekkopen" % "mightycrawler" % "0.7"
+  "no.bekk.bekkopen" % "mightycrawler" % "0.8"
 )
 
 play.Project.playScalaSettings ++ Seq(
