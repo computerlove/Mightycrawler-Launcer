@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
   jdbc,
   anorm,
   "no.bekk.bekkopen" % "mightycrawler" % "0.8",
-  "mysql" % "mysql-connector-java" % "5.1.25",
+  "mysql" % "mysql-connector-java" % "5.1.25"
 )
 
 play.Project.playScalaSettings ++ Seq(
