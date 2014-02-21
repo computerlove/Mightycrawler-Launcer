@@ -31,7 +31,7 @@ object CrawlerJobRun {
         'crawlerJobRunId -> crawlerJobRunId
       ).apply().headOption match {
         case Some(row) =>
-          row[Long]("sum")
+          row[java.math.BigDecimal]("sum").longValue()
         case None => 0
       }
     }

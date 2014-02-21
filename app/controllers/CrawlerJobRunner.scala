@@ -63,7 +63,7 @@ object CrawlerJobRunner extends Controller {
         }
 
         val numPagesDownloaded: Long = CrawlerJobRun.getNumPagesDownloaded(crawlerJobRunId)
-        val totalResponseTime: Double = CrawlerJobRun.getTotalResponseTime(crawlerJobRunId)
+        val totalResponseTime: Long = CrawlerJobRun.getTotalResponseTime(crawlerJobRunId)
         val avgResponsetime = totalResponseTime / numPagesDownloaded
         Ok(views.html.crawlerjobrun.index(crawlerJobRun, duration,
           numPagesDownloaded,
