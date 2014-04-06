@@ -6,19 +6,19 @@ import scala.Some
 
 name := "mightycrawlerlauncher"
 
-version := "1.3"
+version := "1.4"
 
 libraryDependencies ++= Seq(
   jdbc,
   anorm,
-  "no.bekk.bekkopen" % "mightycrawler" % "0.9",
+  "no.bekk.bekkopen" % "mightycrawler" % "0.10",
   "mysql" % "mysql-connector-java" % "5.1.25"
 )
 
 play.Project.playScalaSettings ++ Seq(
   name in Rpm := "mightycrawlerlauncher",
-  version in Rpm := "3",
-  rpmRelease := "3",
+  version in Rpm := "4",
+  rpmRelease := "4",
   packageSummary := "Webapp for crawling sites",
   rpmVendor := "Kantega",
   rpmUrl := Some("http://kantega.no"),
@@ -27,5 +27,5 @@ play.Project.playScalaSettings ++ Seq(
   rpmGroup := Some("www"),
   name in Debian := "mightycrawlerlauncher",
   maintainer in Debian := "Kantega",
-  version in Debian := "3"
+  version in Debian := "4"
 )
