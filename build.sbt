@@ -15,10 +15,11 @@ libraryDependencies ++= Seq(
   "mysql" % "mysql-connector-java" % "5.1.25"
 )
 
+val versionComponents = version.toString.split("\\.")
 play.Project.playScalaSettings ++ Seq(
   name in Rpm := "mightycrawlerlauncher",
-  version in Rpm := "4",
-  rpmRelease := "4",
+  version in Rpm := versionComponents(1),
+  rpmRelease := versionComponents(2),
   packageSummary := "Webapp for crawling sites",
   rpmVendor := "Kantega",
   rpmUrl := Some("http://kantega.no"),
@@ -27,5 +28,5 @@ play.Project.playScalaSettings ++ Seq(
   rpmGroup := Some("www"),
   name in Debian := "mightycrawlerlauncher",
   maintainer in Debian := "Kantega",
-  version in Debian := "4"
+  version in Debian := version.toString
 )
