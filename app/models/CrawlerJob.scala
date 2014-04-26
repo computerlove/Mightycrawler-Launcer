@@ -13,6 +13,7 @@ case class CrawlerJob(id: Pk[Long] = NotAssigned,
                       label: String,
                       startUrls: String,
                       includePattern: String = "",
+                      excludePattern: String = "",
                       extractPattern: String = "text/html",
                       linkPattern: String = "href=\"(.*)\"",
                       storePattern: String = "",
@@ -43,11 +44,12 @@ object CrawlerJob {
   def create(crawlerJob: CrawlerJob): Option[Long] =  {
     DB.withConnection { implicit c =>
       SQL("insert into crawlerjob " +
-        "( label,   startUrls,   includePattern,   extractPattern,   linkPattern,   storePattern,   userAgent,   downloadThreads,   maxVisits,   maxDownloads,   maxRecursion,   maxTime,   downloadDelay,   responseTimeout,   crawlerTimeout) values " +
-        "({label}, {startUrls}, {includePattern}, {extractPattern}, {linkPattern}, {storePattern}, {userAgent}, {downloadThreads}, {maxVisits}, {maxDownloads}, {maxRecursion}, {maxTime}, {downloadDelay}, {responseTimeout}, {crawlerTimeout})").on(
+        "( label,   startUrls,   includePattern,   excludePattern,  extractPattern,   linkPattern,   storePattern,   userAgent,   downloadThreads,   maxVisits,   maxDownloads,   maxRecursion,   maxTime,   downloadDelay,   responseTimeout,   crawlerTimeout) values " +
+        "({label}, {startUrls}, {includePattern}, {excludePattern}, {extractPattern}, {linkPattern}, {storePattern}, {userAgent}, {downloadThreads}, {maxVisits}, {maxDownloads}, {maxRecursion}, {maxTime}, {downloadDelay}, {responseTimeout}, {crawlerTimeout})").on(
         'label -> crawlerJob.label,
         'startUrls -> crawlerJob.startUrls,
         'includePattern -> crawlerJob.includePattern,
+        'excludePattern -> crawlerJob.excludePattern,
         'extractPattern -> crawlerJob.extractPattern,
         'linkPattern -> crawlerJob.linkPattern,
         'storePattern -> crawlerJob.storePattern,
@@ -66,11 +68,12 @@ object CrawlerJob {
 
   def update(id: Long, crawlerJob: CrawlerJob)  {
     DB.withConnection { implicit c =>
-      SQL("update crawlerjob set label={label}, startUrls={startUrls}, includePattern={includePattern}, extractPattern={extractPattern}, linkPattern={linkPattern}, storePattern={storePattern}, userAgent={userAgent}, downloadThreads={downloadThreads}, maxVisits={maxVisits}, maxDownloads={maxDownloads}, maxRecursion={maxRecursion}, maxTime={maxTime}, downloadDelay={downloadDelay}, responseTimeout={responseTimeout}, crawlerTimeout={crawlerTimeout} where id = {id}").on(
+      SQL("update crawlerjob set label={label}, startUrls={startUrls}, includePattern={includePattern}, excludePattern={excludePattern}, extractPattern={extractPattern}, linkPattern={linkPattern}, storePattern={storePattern}, userAgent={userAgent}, downloadThreads={downloadThreads}, maxVisits={maxVisits}, maxDownloads={maxDownloads}, maxRecursion={maxRecursion}, maxTime={maxTime}, downloadDelay={downloadDelay}, responseTimeout={responseTimeout}, crawlerTimeout={crawlerTimeout} where id = {id}").on(
         'id -> id,
         'label -> crawlerJob.label,
         'startUrls -> crawlerJob.startUrls,
         'includePattern -> crawlerJob.includePattern,
+        'excludePattern -> crawlerJob.excludePattern,
         'extractPattern -> crawlerJob.extractPattern,
         'linkPattern -> crawlerJob.linkPattern,
         'storePattern -> crawlerJob.storePattern,
@@ -107,6 +110,7 @@ object CrawlerJob {
 
     properties.put("startURLs", crawlerJob.startUrls)
     if(!crawlerJob.includePattern.isEmpty) properties.put("includePattern", crawlerJob.includePattern)
+    if(!crawlerJob.excludePattern.isEmpty) properties.put("excludePattern", crawlerJob.excludePattern)
     if(!crawlerJob.extractPattern.isEmpty) properties.put("extractPattern", crawlerJob.extractPattern)
     properties.put("linkPattern", crawlerJob.linkPattern)
     properties.put("storePattern", crawlerJob.storePattern)
@@ -135,6 +139,7 @@ object CrawlerJob {
       get[String]("label") ~
       get[String]("startUrls") ~
       get[String]("includePattern") ~
+      get[String]("excludePattern") ~
       get[String]("extractPattern") ~
       get[String]("linkPattern") ~
       get[String]("storePattern") ~
@@ -147,8 +152,8 @@ object CrawlerJob {
       get[Int]("downloadDelay") ~
       get[Int]("responseTimeout") ~
       get[Int]("crawlerTimeout") map {
-      case id~label~startUrls~includePattern~extractPattern~linkPattern~storePattern~userAgent~downloadThreads~maxVisits~maxDownloads~maxRecursion~maxTime~downloadDelay~responseTimeout~crawlerTimeout
-      => CrawlerJob(id, label, startUrls, includePattern, extractPattern, linkPattern, storePattern, userAgent, downloadThreads, maxVisits, maxDownloads, maxRecursion, maxTime, downloadDelay, responseTimeout, crawlerTimeout)
+      case id~label~startUrls~includePattern~excludePattern~extractPattern~linkPattern~storePattern~userAgent~downloadThreads~maxVisits~maxDownloads~maxRecursion~maxTime~downloadDelay~responseTimeout~crawlerTimeout
+      => CrawlerJob(id, label, startUrls, includePattern, excludePattern, extractPattern, linkPattern, storePattern, userAgent, downloadThreads, maxVisits, maxDownloads, maxRecursion, maxTime, downloadDelay, responseTimeout, crawlerTimeout)
     }
   }
 }

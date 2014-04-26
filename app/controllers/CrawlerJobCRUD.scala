@@ -69,6 +69,7 @@ object CrawlerJobCRUD extends Controller {
       "label" -> nonEmptyText,
       "startUrls" -> nonEmptyText,
       "includePattern" -> text,
+      "excludePattern" -> text,
       "extractPattern" -> nonEmptyText,
       "linkPattern" -> nonEmptyText,
       "storePattern" -> text,

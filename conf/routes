@@ -16,6 +16,6 @@ POST        /jobs/:id/delete        controllers.CrawlerJobCRUD.deleteJob(id: Lon
 POST        /jobs/:id               controllers.CrawlerJobCRUD.updateJob(id: Long)
 GET         /jobs/:id/edit          controllers.CrawlerJobCRUD.editJob(id: Long)
 
-POST         /jobs/:id/run          controllers.CrawlerJobRunner.runJob(id: Long)
+POST        /jobs/:id/run          controllers.CrawlerJobRunner.runJob(id: Long)
 GET         /jobs/run/:id          controllers.CrawlerJobRunner.jobRun(id: Long)
 
