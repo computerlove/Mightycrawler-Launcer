@@ -6,7 +6,7 @@ import scala.Some
 
 name := "mightycrawlerlauncher"
 
-version := "1.4"
+version := "1.5"
 
 libraryDependencies ++= Seq(
   jdbc,
@@ -16,10 +16,11 @@ libraryDependencies ++= Seq(
 )
 
 val versionComponents = version.toString.split("\\.")
+
 play.Project.playScalaSettings ++ Seq(
   name in Rpm := "mightycrawlerlauncher",
-  version in Rpm := versionComponents(1),
-  rpmRelease := versionComponents(2),
+  version in Rpm := versionComponents(0),
+  rpmRelease := versionComponents(1),
   packageSummary := "Webapp for crawling sites",
   rpmVendor := "Kantega",
   rpmUrl := Some("http://kantega.no"),
