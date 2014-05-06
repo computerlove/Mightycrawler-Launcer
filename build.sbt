@@ -6,7 +6,9 @@ import scala.Some
 
 name := "mightycrawlerlauncher"
 
-version := "1.5"
+val versionString = "1.5"
+
+version := versionString
 
 libraryDependencies ++= Seq(
   jdbc,
@@ -15,7 +17,7 @@ libraryDependencies ++= Seq(
   "mysql" % "mysql-connector-java" % "5.1.25"
 )
 
-val versionComponents = version.toString.split("\\.")
+val versionComponents = versionString.split("\\.")
 
 play.Project.playScalaSettings ++ Seq(
   name in Rpm := "mightycrawlerlauncher",
@@ -29,5 +31,5 @@ play.Project.playScalaSettings ++ Seq(
   rpmGroup := Some("www"),
   name in Debian := "mightycrawlerlauncher",
   maintainer in Debian := "Kantega",
-  version in Debian := version.toString
+  version in Debian := versionString
 )
