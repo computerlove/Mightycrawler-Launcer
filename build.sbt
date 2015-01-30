@@ -6,7 +6,7 @@ import scala.Some
 
 name := "mightycrawlerlauncher"
 
-val versionString = "1.6"
+val versionString = "1.7"
 
 version := versionString
 
