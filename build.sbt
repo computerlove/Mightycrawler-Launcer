@@ -13,7 +13,7 @@ version := versionString
 libraryDependencies ++= Seq(
   jdbc,
   anorm,
-  "no.bekk.bekkopen" % "mightycrawler" % "0.11",
+  "no.bekk.bekkopen" % "mightycrawler" % "0.12",
   "mysql" % "mysql-connector-java" % "5.1.25"
 )
 
