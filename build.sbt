@@ -6,14 +6,14 @@ import scala.Some
 
 name := "mightycrawlerlauncher"
 
-val versionString = "1.5"
+val versionString = "1.6"
 
 version := versionString
 
 libraryDependencies ++= Seq(
   jdbc,
   anorm,
-  "no.bekk.bekkopen" % "mightycrawler" % "0.10",
+  "no.bekk.bekkopen" % "mightycrawler" % "0.11",
   "mysql" % "mysql-connector-java" % "5.1.25"
 )
 
